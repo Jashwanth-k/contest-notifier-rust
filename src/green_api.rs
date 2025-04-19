@@ -14,7 +14,7 @@ pub mod green_api {
     use super::*;
     static API_URL: &str =
         "https://${apiHost}/waInstance${idInstance}/sendMessage/${tokenInstance}";
-    pub async fn sendMessage(message: &String) -> Result<reqwest::Response, Box<dyn Error>> {
+    pub async fn send_message(message: &String) -> Result<reqwest::Response, Box<dyn Error>> {
         let api_host: &str = &env::var("GREEN_API_HOST")?;
         let id_instance: &str = &env::var("GREEN_INSTANCE_ID")?;
         let token_instance: &str = &env::var("GREEN_TOKEN_INSTANCE")?;
