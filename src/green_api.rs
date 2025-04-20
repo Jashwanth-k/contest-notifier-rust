@@ -10,11 +10,16 @@ struct RequestBody<'a> {
     message: &'a String,
 }
 
-pub mod green_api {
+#[derive(serde::Deserialize, Debug)]
+pub struct ResponseBody {
+    pub idMessage: Option<String>,
+}
+
+pub mod main {
     use super::*;
     static API_URL: &str =
         "https://${apiHost}/waInstance${idInstance}/sendMessage/${tokenInstance}";
-    pub async fn send_message(message: &String) -> Result<reqwest::Response, Box<dyn Error>> {
+    pub async fn send_message(message: &String) -> Result<ResponseBody, Box<dyn Error>> {
         let api_host: &str = &env::var("GREEN_API_HOST")?;
         let id_instance: &str = &env::var("GREEN_INSTANCE_ID")?;
         let token_instance: &str = &env::var("GREEN_TOKEN_INSTANCE")?;
@@ -39,7 +44,8 @@ pub mod green_api {
             .headers(headers)
             .body(json_body.to_string())
             .send()
-            .await;
-        return Ok(response?);
+            .await?;
+        let resp_body = response.json::<ResponseBody>().await?;
+        return Ok(resp_body);
     }
 }
