@@ -19,6 +19,7 @@ use std::error::Error;
 // }
 
 #[derive(serde::Deserialize, Debug)]
+#[allow(unused)]
 pub struct ResponseBody {
     meta: Option<Meta>,
     objects: Option<Vec<ResponseObject>>,
@@ -26,6 +27,7 @@ pub struct ResponseBody {
 }
 
 #[derive(serde::Deserialize, Debug)]
+#[allow(unused)]
 pub struct Meta {
     estimated_count: Option<u64>,
     limit: Option<u32>,
@@ -36,6 +38,7 @@ pub struct Meta {
 }
 
 #[derive(serde::Deserialize, Debug)]
+#[allow(unused)]
 pub struct ResponseObject {
     pub duration: Option<u32>,
     pub end: Option<String>,
@@ -78,7 +81,6 @@ pub mod main {
                 "${endDate}",
                 &end_date.format("%Y-%m-%dT%H:%M:%S").to_string(),
             );
-        let headers2 = headers.clone();
 
         let response: reqwest::Response = client.get(&apiurl).headers(headers).send().await?;
         let resp_body: ResponseBody = response.json::<ResponseBody>().await?;

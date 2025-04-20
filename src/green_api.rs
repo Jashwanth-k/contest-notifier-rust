@@ -5,12 +5,14 @@ use std::env;
 use std::error::Error;
 
 #[derive(Serialize, Debug)]
+#[allow(non_snake_case)]
 struct RequestBody<'a> {
     chatId: &'a str,
     message: &'a String,
 }
 
 #[derive(serde::Deserialize, Debug)]
+#[allow(non_snake_case, unused)]
 pub struct ResponseBody {
     pub idMessage: Option<String>,
 }
